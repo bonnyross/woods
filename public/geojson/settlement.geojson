@@ -1,0 +1,33 @@
+{
+"type": "FeatureCollection",
+"name": "settlement",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "Name": "Hunningham", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.453004652165157, 52.30888086275592 ] } },
+{ "type": "Feature", "properties": { "id": 2, "Name": "Eathorpe", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.427218311542603, 52.317926656165653 ] } },
+{ "type": "Feature", "properties": { "id": 3, "Name": "Wappenbury", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.446468281700944, 52.321131760690044 ] } },
+{ "type": "Feature", "properties": { "id": 4, "Name": "Cubbington", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.49703536749002, 52.311647490957036 ] } },
+{ "type": "Feature", "properties": { "id": 6, "Name": "Weston", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.464425343415815, 52.322053734064923 ] } },
+{ "type": "Feature", "properties": { "id": 8, "Name": "Frankton", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.376794882247247, 52.329428829506867 ] } },
+{ "type": "Feature", "properties": { "id": 9, "Name": "Bourton", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.362141919887913, 52.329867784515883 ] } },
+{ "type": "Feature", "properties": { "id": 11, "Name": "Stretton on Dunsmore", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.402365738129223, 52.349616251968527 ] } },
+{ "type": "Feature", "properties": { "id": 13, "Name": "Stoneleigh", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.516285337648362, 52.351546739905643 ] } },
+{ "type": "Feature", "properties": { "id": 14, "Name": "Ashow", "Domesday": "yes", "Wood": "Woodland half a league long and 3 furlongs broad", "Wood area": 180, "Map units": 727200 }, "geometry": { "type": "Point", "coordinates": [ -1.543867384442403, 52.331096835368491 ] } },
+{ "type": "Feature", "properties": { "id": 15, "Name": "Bubbenhall", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.469525148942839, 52.349089740625729 ] } },
+{ "type": "Feature", "properties": { "id": 16, "Name": "Baginton", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.494665035343658, 52.371899480471789 ] } },
+{ "type": "Feature", "properties": { "id": 17, "Name": "Ryton", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.43605318590632, 52.366373585913415 ] } },
+{ "type": "Feature", "properties": { "id": 18, "Name": "Wolston", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.395757539418151, 52.3770300493196 ] } },
+{ "type": "Feature", "properties": { "id": 19, "Name": "Brandon", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.400498203710877, 52.383343777414836 ] } },
+{ "type": "Feature", "properties": { "id": 20, "Name": "Brinklow", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.367529038402375, 52.410342312821705 ] } },
+{ "type": "Feature", "properties": { "id": 21, "Name": "Bretford", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.370402168276754, 52.391059330220479 ] } },
+{ "type": "Feature", "properties": { "id": 20, "Name": "Lillington", "Domesday": "yes", "Wood": "woodland 1 league long and a half broad", "Wood area": 720, "Map units": 2908800 }, "geometry": { "type": "Point", "coordinates": [ -1.524895929802438, 52.302773459003802 ] } },
+{ "type": "Feature", "properties": { "id": 21, "Name": "Princethorpe", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.411297214242513, 52.334143527772113 ] } },
+{ "type": "Feature", "properties": { "id": 22, "Name": "Binley", "Domesday": "yes", "Wood": "church: woodland half a league long and 1 furlong broad and Eadwulf: woodland 4 furlongs, 2 furlongs", "Wood area": 140, "Map units": 565600 }, "geometry": { "type": "Point", "coordinates": [ -1.446038569001131, 52.403335959744737 ] } },
+{ "type": "Feature", "properties": { "id": 23, "Name": "Marston", "Domesday": "yes", "Wood": null, "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.380864063198994, 52.382534912632558 ] } },
+{ "type": "Feature", "properties": { "id": 234, "Name": "Bericote", "Domesday": "yes", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.533443405973201, 52.316386038526623 ] } },
+{ "type": "Feature", "properties": { "id": 25, "Name": "Blackdown", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.537441419020819, 52.314742636568035 ] } },
+{ "type": "Feature", "properties": { "id": 26, "Name": "Stareton", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.508421358795862, 52.33980841527088 ] } },
+{ "type": "Feature", "properties": { "id": 27, "Name": "Willenhall", "Domesday": "no", "Wood": "no", "Wood area": null, "Map units": 10000 }, "geometry": { "type": "Point", "coordinates": [ -1.471336341216227, 52.383502620589802 ] } },
+{ "type": "Feature", "properties": { "id": 28, "Name": "Smeeton", "Domesday": "yes", "Wood": "woodland half a league long and as much broad", "Wood area": 360, "Map units": 1454400 }, "geometry": { "type": "Point", "coordinates": [ -1.3957532152384, 52.423118350847986 ] } }
+]
+}
