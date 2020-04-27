@@ -15,3 +15,10 @@
     margin: 0 0 5px;
     color: #777;
 }
+.leaflet-control-centre{
+	display:block;
+	float:left;
+	width:25px;
+	height:25px;	
+	background: url('https://polar-tor-01758.herokuapp.com/images/star.png') no-repeat 2px 2px #fff;
+	border-radius:6px;

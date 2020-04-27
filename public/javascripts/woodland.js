@@ -1,8 +1,6 @@
-//
 //	Displays a map 
 //	Uses the Leaflet package with geojson inputs obtained through ajax calls to node.js
 //
-
 //	Creates map area
 var map = L.map('map', {
 	center: [52.3584,-1.4649],
@@ -32,17 +30,14 @@ var attrib = L.control.attribution({options: {
 // 	A pdf on each area can be opened in a new browser window from the tooltip
 var areas	= new L.geoJson.ajax('/woodland/area', {
 	style(feature) {
-		return { color: 'red', fill: true, fillOpacity: 0 };
+		return { color: 'red', fill: false };
 	},
 	onEachFeature: function(feature, layer) {
 		layer.on({click: zoomToArea}),
-		layer.bindTooltip('<a href="https://polar-tor-01758.herokuapp.com/pdfs/Area' + feature.properties.Area +'.pdf" target="Area">Area ' +feature.properties.Area +'</a>', {permanent: true, direction: 'center', opacity: 0.8, interactive: true});
+		layer.bindTooltip('<a href="https://polar-tor-01758.herokuapp.com/pdfs/Area' + feature.properties.Area + '.pdf" target="Area">Area ' + feature.properties.Area +'</a>', 
+		{permanent: true, direction: 'center', opacity: 0.8, interactive: true});
 	}
 }).addTo(map);
-
-function zoomToArea(e) {
-	map.fitBounds(e.target.getBounds());
-	}
 
 //	Adds a vector layer showing the project woods
 var Woods = new L.geoJson.ajax('/woodland/woods', {
@@ -50,19 +45,18 @@ var Woods = new L.geoJson.ajax('/woodland/woods', {
         switch (feature.properties.Present) {
             case 'yes': return {color: "green"};
             case 'no':   return {color: "brown"};
-			case 'pt':   return {color: "blue"};
-        }
+			case 'pt':   return {color: "blue"};}
 		fillOpacity: 0.8
     },
 	onEachFeature: function(feature, layer) {
 		layer.on({mouseover: highlightWoods, mouseout: resetWoods, click: zoomToWoods }),
-		layer.bindPopup('<b>Name: </b> '		+ feature.properties.name + '<br>' +
+		layer.bindPopup('<b>Name: </b> '	+ feature.properties.name + '<br>' +
 						'<b>Old Name: </b> ' 			+ feature.properties.OldName + '<br>' + 
-						'<b>Description: </b> ' 			+ feature.properties.OldDesc + '<br>' +
-						'<b>Source: </b> '	+ feature.properties.OldSource + '<br>' +
-						'<b>Area: </b> '	+ feature.properties.Area + '<br>' +
-						'<b>Present: </b> '	+ feature.properties.Present + '<br>' +
-						'<b>OS 1888: </b> '	+ feature.properties.OS1888 + '<br>'
+						'<b>Description: </b> ' 		+ feature.properties.OldDesc + '<br>' +
+						'<b>Source: </b> '				+ feature.properties.OldSource + '<br>' +
+						'<b>Area: </b> '					+ feature.properties.Area + '<br>' +
+						'<b>Present: </b> '				+ feature.properties.Present + '<br>' +
+						'<b>OS 1888: </b> '				+ feature.properties.OS1888 + '<br>'
 						, {maxWidth : 400});
 	}
 }).addTo(map);
@@ -71,19 +65,19 @@ var Woods = new L.geoJson.ajax('/woodland/woods', {
 function highlightWoods(e) {
 	var layer = e.target;
 	layer.setStyle({weight: 5, color: '#666', dashArray: '', fillOpacity: 0.7});
-	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge ) {
 		layer.bringToFront();}}	
 function resetWoods(e) {
-		Woods.resetStyle(e.target);}
+	Woods.resetStyle();}
 function zoomToWoods(e) {
-	map.fitBounds(e.target.getBounds());}
-
+	map.fitBounds(e.target.getBounds());
+	}
 //	Adds a vector layer showing the project parks
 var parkland	= new L.geoJson.ajax('/woodland/parkland', {
 	style: function(feature) {
         switch (feature.properties.Present) {
             case 'yes': return {color: "green"};
-            case 'no':   return {color: "brown"};
+            case 'no':  return {color: "brown"};
         }
 		fillOpacity: 0.8
     },
@@ -95,19 +89,19 @@ var parkland	= new L.geoJson.ajax('/woodland/parkland', {
 						, {maxWidth : 400});
 	}
 }).addTo(map);
-
 // create mouse functions and style for the parks
 function highlightparkland(e) {
 	var layer = e.target;
 	layer.setStyle({weight: 5, color: '#666', dashArray: '1', fillOpacity: 0.7});
 	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 		layer.bringToFront();}}	
-		
 function resetparkland(e) {
-		parkland.resetStyle(e.target);}
-		
+	parkland.resetStyle(e.target);}
 function zoomToparkland(e) {
-	map.fitBounds(e.target.getBounds());}
+	map.setView(e.latlng,14);}
+function zoomToArea(e) {
+	map.fitBounds(e.target.getBounds());
+	}
 	
 //	Adds a vector layer showing the project boundary
 var boundary	= new L.geoJson.ajax('/woodland/boundary', {
@@ -142,7 +136,7 @@ var customControl =  L.Control.extend({
 	},
 	onAdd: function (map) {
 		var container = L.DomUtil.create('div', 'info');
-		container.innerHTML = '<h4>Dunsmore Living Landscape Woodland Project</h4>' +  ' </p>';
+		container.innerHTML = '<h4>Dunsmore Living Landscape Woodland Project</h4>' +  ' <p><small>(click to remove)</small></p>';
 		container.onclick = function(){
 			map.removeControl(container);
 		}
@@ -151,16 +145,40 @@ var customControl =  L.Control.extend({
 });	
 map.addControl(new customControl());
 
-//  Adds a legend for the wood and parkland layers
-var legend = L.control({position: 'bottomright'});
-legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
-	div.innerHTML = 	'<i legendi style="color:black"></i><strong>Wood and Park Legend</strong><br>' +
+//Adds a legend for the wood and parkland; it can be removed on a mouse-click
+var legend =  L.Control.extend({
+	options: {
+		position: 'bottomright'
+	},
+    onAdd: function (map) {
+		var container = L.DomUtil.create('div', 'info legend');
+		container.innerHTML = 	'<i legendi style="color:black"></i><strong>Wood and Park Legend</strong><br>' +
 									'<p legendi style="background:#00CD00"</p>Still here<br>' +
 									'<p legendi style="background:#4876FF"  </p>Partly here<br>' +
-									'<p legendi style="background:#A0522D"  </p>Gone<br>' ;
-	return div;
-};
-legend.addTo(map);
+									'<p legendi style="background:#A0522D"  </p>Gone<br>'  +
+									'<p><small> (click to remove)</small><p>';
+		container.onclick = function(){
+			map.removeControl(container);
+		}
+		return container;
+	}
+});	
+map.addControl(new legend());
+
+// enables centering of the map
+var centreControl =  L.Control.extend({
+	options: {
+		position: 'topright'
+	},
+	onAdd: function (map) {
+		var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-centre');
+		container.title = 'Re-centre the Map';
+		container.onclick = function(){
+			map.setView(new L.LatLng(52.3584,-1.4649), 12);
+		}
+		return container;
+	}
+});	
+map.addControl(new centreControl());
 
 
