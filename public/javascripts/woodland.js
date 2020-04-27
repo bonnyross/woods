@@ -9,7 +9,7 @@ var map = L.map('map', {
 });
 
 // prepare all other layers, adding basemap  tiles to start with /
-var tile = L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var tile = L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: ['a','b','c'],
 	opacity: 0.75
