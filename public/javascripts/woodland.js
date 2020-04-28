@@ -1,5 +1,5 @@
 //	Displays a map 
-//	Uses the Leaflet package with geojson inputs obtained through ajax calls to node.js
+//	Uses the Leaflet package with geojson inputs obtained through ajax calls to node.js via express
 //
 //	Creates map area
 var map = L.map('map', {
@@ -10,7 +10,6 @@ var map = L.map('map', {
 
 // prepare all other layers, adding basemap  tiles to start with /
 var tile = L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: ['a','b','c'],
 	opacity: 0.75
 }).addTo( map );
@@ -19,12 +18,21 @@ var tile = L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var topography = '/topography.jpg', 
 	imageBounds = [[52.281405911,-1.576311548],[52.435227039,-1.354224667]];
 var topotile = L.imageOverlay(topography, imageBounds).addTo(map);
-topotile.setOpacity(0.5);
+topotile.setOpacity(0.8);
 
-//	Adds an attribution bottom right
-var attrib = L.control.attribution({options: {
+//	Adds links and attributions 
+var osmattrib = L.control.attribution({options: {
 		position: 'bottomright'
-	},prefix: '<a href="http://www.stretton-on-dunsmore-history.org.uk">Stretton History Society website   </a>'}).addTo(map);
+	},prefix: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+var sodhslink = L.control.attribution({options: {
+		position: 'bottomright'
+	},prefix: '<a href="http://www.stretton-on-dunsmore-history.org.uk" target="SODHS">Stretton History Society</a>'}).addTo(map);
+var nlslink = L.control.attribution({options: {
+		position: 'bottomright'
+	},prefix: '<a href="https://maps.nls.uk/geo/explore/#zoom=14&lat=52.34374&lon=-1.44998&layers=168&b=1" target="NLS">National Library of Scotland</a>'}).addTo(map);
+var dunsmorelink = L.control.attribution({options: {
+		position: 'bottomright'
+	},prefix: '<a href="https://www.exploredunsmore.org/" target="Dunsmore">Dunsmore Living Landscape</a>'}).addTo(map);
 
 //	Adds a vector layer showing the project study areas
 // 	A pdf on each area can be opened in a new browser window from the tooltip
@@ -38,6 +46,9 @@ var areas	= new L.geoJson.ajax('/woodland/area', {
 		{permanent: true, direction: 'center', opacity: 0.8, interactive: true});
 	}
 }).addTo(map);
+function zoomToArea(e) {
+	map.fitBounds(e.target.getBounds());
+	}
 
 //	Adds a vector layer showing the project woods
 var Woods = new L.geoJson.ajax('/woodland/woods', {
@@ -49,7 +60,7 @@ var Woods = new L.geoJson.ajax('/woodland/woods', {
 		fillOpacity: 0.8
     },
 	onEachFeature: function(feature, layer) {
-		layer.on({mouseover: highlightWoods, mouseout: resetWoods, click: zoomToWoods }),
+		layer.on({mouseover: highlightPoly, mouseout: resetPoly, click: zoomToPoly }),
 		layer.bindPopup('<b>Name: </b> '	+ feature.properties.name + '<br>' +
 						'<b>Old Name: </b> ' 			+ feature.properties.OldName + '<br>' + 
 						'<b>Description: </b> ' 		+ feature.properties.OldDesc + '<br>' +
@@ -61,18 +72,19 @@ var Woods = new L.geoJson.ajax('/woodland/woods', {
 	}
 }).addTo(map);
 
-// create mouse functions and style for woods
-function highlightWoods(e) {
+// create mouse functions and style for woods and parklands
+function highlightPoly(e) {
 	var layer = e.target;
 	layer.setStyle({weight: 5, color: '#666', dashArray: '', fillOpacity: 0.7});
 	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge ) {
 		layer.bringToFront();}}	
-function resetWoods(e) {
+function resetPoly(e) {
 	Woods.resetStyle();}
-function zoomToWoods(e) {
+function zoomToPoly(e) {
 	map.fitBounds(e.target.getBounds());
 	}
-//	Adds a vector layer showing the project parks
+	
+//	Adds a vector layer showing the project parklands
 var parkland	= new L.geoJson.ajax('/woodland/parkland', {
 	style: function(feature) {
         switch (feature.properties.Present) {
@@ -82,31 +94,19 @@ var parkland	= new L.geoJson.ajax('/woodland/parkland', {
 		fillOpacity: 0.8
     },
 	onEachFeature: function(feature, layer) {
-		layer.on({mouseover: highlightparkland,  mouseout: resetparkland, click: zoomToparkland }),
+		//layer.on({mouseover: highlightparkland,  mouseout: resetparkland, click: zoomToparkland }),
+		layer.on({mouseover: highlightPoly,  mouseout: resetPoly, click: zoomToPoly }),
 		layer.bindPopup(	'<b>Name: 	</b> '	+ feature.properties.pwp_name + '<br>' +
 											'<b>Source: 	</b> '	+ feature.properties.source1txt + '<br>' + 
 											'<b>Present:  </b> ' 	+ feature.properties.Present + '<br>' 
 						, {maxWidth : 400});
 	}
 }).addTo(map);
-// create mouse functions and style for the parks
-function highlightparkland(e) {
-	var layer = e.target;
-	layer.setStyle({weight: 5, color: '#666', dashArray: '1', fillOpacity: 0.7});
-	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-		layer.bringToFront();}}	
-function resetparkland(e) {
-	parkland.resetStyle(e.target);}
-function zoomToparkland(e) {
-	map.setView(e.latlng,14);}
-function zoomToArea(e) {
-	map.fitBounds(e.target.getBounds());
-	}
 	
 //	Adds a vector layer showing the project boundary
 var boundary	= new L.geoJson.ajax('/woodland/boundary', {
 	style(feature) {
-		return { weight: 3, color: 'red', dashArray: '7' , fill: false};
+		return { weight: 3, color: 'blue', dashArray: '7' , fill: false};
 	}
 }).addTo(map);
 
@@ -128,6 +128,9 @@ var overlayMaps = {
 	"Boundary": boundary,
 	"Roads": roads};
 var controlLayers =	L.control.layers(baseMaps, overlayMaps, {collapsed: false, position: 'topright'}).addTo(map);		
+
+L.control.scale({ position: 'bottomright' }).addTo(map);
+
 
 //	adds a welcome box on start up that can be removed on mouse-click; box characteristics are defined in trail.css
 var customControl =  L.Control.extend({
