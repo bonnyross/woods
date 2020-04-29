@@ -48,14 +48,14 @@ var areas	= new L.geoJson.ajax('/woodland/area', {
 }).addTo(map);
 function zoomToArea(e) {
 	map.fitBounds(e.target.getBounds());
-	}
+}
 
 //	Adds a vector layer showing the project woods
 var Woods = new L.geoJson.ajax('/woodland/woods', {
 	style: function(feature) {
         switch (feature.properties.Present) {
             case 'yes': return {color: "green"};
-            case 'no':   return {color: "brown"};
+            case 'no':  return {color: "brown"};
 			case 'pt':   return {color: "blue"};}
 		fillOpacity: 0.8
     },
@@ -111,9 +111,9 @@ var boundary	= new L.geoJson.ajax('/woodland/boundary', {
 }).addTo(map);
 
 //	Adds a vector layer showing the major roads
-var roads	= new L.geoJson.ajax('/woodland/roads', {
+var parish	= new L.geoJson.ajax('/woodland/parish', {
 	style(feature) {
-		return { weight: 2, color: 'black', dashArray: '1' };
+		return { weight: 1, color: 'blue', dashArray: '3', fill: false };
 	}
 }).addTo(map);
 
@@ -126,11 +126,11 @@ var overlayMaps = {
 	"Parkland": parkland,
 	"Areas": areas,
 	"Boundary": boundary,
-	"Roads": roads};
+	"Parishes": parish};
 var controlLayers =	L.control.layers(baseMaps, overlayMaps, {collapsed: false, position: 'topright'}).addTo(map);		
 
+// Adds a scale; both imperial and metric
 L.control.scale({ position: 'bottomright' }).addTo(map);
-
 
 //	adds a welcome box on start up that can be removed on mouse-click; box characteristics are defined in trail.css
 var customControl =  L.Control.extend({
@@ -157,8 +157,8 @@ var legend =  L.Control.extend({
 		var container = L.DomUtil.create('div', 'info legend');
 		container.innerHTML = 	'<i legendi style="color:black"></i><strong>Wood and Park Legend</strong><br>' +
 									'<p legendi style="background:#00CD00"</p>Still here<br>' +
-									'<p legendi style="background:#4876FF"  </p>Partly here<br>' +
-									'<p legendi style="background:#A0522D"  </p>Gone<br>'  +
+									'<p legendi style="background:#4876FF" </p>Partly here<br>' +
+									'<p legendi style="background:#A0522D"</p>Gone<br>'  +
 									'<p><small> (click to remove)</small><p>';
 		container.onclick = function(){
 			map.removeControl(container);
