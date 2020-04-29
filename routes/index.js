@@ -26,10 +26,10 @@ router.get('/woodland/boundary', function(request, res) {
 		if (err) {console.log("Could not open boundary"+ err);} 
 		else { res.send( data ); };	}); });		
 
-router.get('/woodland/roads', function(request, res) {
-	var filename = "./public/geojson/roads.geojson";
+router.get('/woodland/parish', function(request, res) {
+	var filename = "./public/geojson/parish.geojson";
     fs.readFile(filename, function (err, data) {
-		if (err) {console.log("Could not open roads"+ err);} 
+		if (err) {console.log("Could not open parish"+ err);} 
 		else { res.send( data ); };	}); });
 
 module.exports = router;
